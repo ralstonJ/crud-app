@@ -1,0 +1,32 @@
+<h1> CRUD app for User List </h1>
+
+<div class="login-form" *ngIf="!hasLoggedIn">
+  <input type="text" class="username" placeholder="username (ex:a)" [(ngModel)]="username" />
+  <br>
+  <input type="text" class="password" placeholder="password (ex:a)" [(ngModel)]="password" />
+  <br>
+  <button (click)="login()"> Login</button>
+</div>
+
+<div class="add-form" *ngIf="hasLoggedIn">
+  <input type="text" class="username" placeholder="username" [(ngModel)]="newUser.username" />
+  <input type="text" class="password" placeholder="password" [(ngModel)]="newUser.password" />
+  <button (click)="addUser()">Add</button>
+</div>
+
+<div class="user-list" *ngIf="hasLoggedIn && users.length>0">
+  <div class="user-container" *ngFor="let user of users">
+    <div *ngIf="!user.selected">
+        <label>{{user.username}}</label>
+        <label>{{user.password}}</label>
+        <button (click)="edit(user)">edit</button>
+    </div>
+    <div *ngIf="user.selected">
+        <input type="text" (change)="update($event, user, 'username')" [ngModel]="user.username"/>
+        <input type="text" (change)="update($event, user, 'password')" [ngModel]="user.password"/>
+        <button (click)="updateUser(user)">update</button>
+        <button (click)="deleteUser(user)">delete</button>
+        <button (click)="cancel(user)">cancel</button>
+    </div>
+  </div>
+</div>
